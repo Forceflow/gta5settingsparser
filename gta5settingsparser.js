@@ -28,19 +28,19 @@ var GRASS_QUALITY_SETTINGS = {};
 GRASS_QUALITY_SETTINGS["0"] = "Normal";
 GRASS_QUALITY_SETTINGS["1"] = "High";
 GRASS_QUALITY_SETTINGS["2"] = "Very High";
-GRASS_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+GRASS_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
 
 var WATER_QUALITY_SETTINGS = {};
 WATER_QUALITY_SETTINGS["0"] = "Normal";
 WATER_QUALITY_SETTINGS["1"] = "High";
 WATER_QUALITY_SETTINGS["2"] = "Very High";
-WATER_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+WATER_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
 
 var PARTICLE_QUALITY_SETTINGS = {};
 PARTICLE_QUALITY_SETTINGS["0"] = "Normal";
 PARTICLE_QUALITY_SETTINGS["1"] = "High";
 PARTICLE_QUALITY_SETTINGS["2"] = "Very High";
-PARTICLE_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+PARTICLE_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
 
 
 function parseXML() {
@@ -116,6 +116,12 @@ function writeSettings(){
 	var water_quality = $xml.find("WaterQuality").attr("value");
 	if(water_quality in WATER_QUALITY_SETTINGS){
 		writeLine("Water quality: " + WATER_QUALITY_SETTINGS[water_quality] + "\n");
+	}
+
+	// Water quality
+	var particle_quality = $xml.find("ParticleQuality").attr("value");
+	if(particle_quality in PARTICLE_QUALITY_SETTINGS){
+		writeLine("Particle quality: " + PARTICLE_QUALITY_SETTINGS[particle_quality] + "\n");
 	}	
 
 	// Tesselation
