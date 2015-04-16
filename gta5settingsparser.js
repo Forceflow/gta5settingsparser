@@ -1,5 +1,6 @@
 var $xml;
 
+// define value -> setting translation
 var TESSELATION_SETTINGS = {};
 TESSELATION_SETTINGS["0"] = "Off";
 TESSELATION_SETTINGS["1"] = "Normal";
@@ -14,6 +15,33 @@ var SHADER_QUALITY_SETTINGS = {};
 SHADER_QUALITY_SETTINGS["0"] = "Normal";
 SHADER_QUALITY_SETTINGS["1"] = "High";
 SHADER_QUALITY_SETTINGS["2"] = "Very High";
+SHADER_QUALITY_SETTINGS["3"] = "Ultra";  // unsure if it actually goes this far
+
+var SHADOW_QUALITY_SETTINGS = {};
+SHADOW_QUALITY_SETTINGS["0"] = "Low";
+SHADOW_QUALITY_SETTINGS["1"] = "Normal";
+SHADOW_QUALITY_SETTINGS["2"] = "High";
+SHADOW_QUALITY_SETTINGS["3"] = "Very High";
+SHADOW_QUALITY_SETTINGS["4"] = "Ultra";  // unsure if it actually goes this far
+
+var GRASS_QUALITY_SETTINGS = {};
+GRASS_QUALITY_SETTINGS["0"] = "Normal";
+GRASS_QUALITY_SETTINGS["1"] = "High";
+GRASS_QUALITY_SETTINGS["2"] = "Very High";
+GRASS_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+
+var WATER_QUALITY_SETTINGS = {};
+WATER_QUALITY_SETTINGS["0"] = "Normal";
+WATER_QUALITY_SETTINGS["1"] = "High";
+WATER_QUALITY_SETTINGS["2"] = "Very High";
+WATER_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+
+var PARTICLE_QUALITY_SETTINGS = {};
+PARTICLE_QUALITY_SETTINGS["0"] = "Normal";
+PARTICLE_QUALITY_SETTINGS["1"] = "High";
+PARTICLE_QUALITY_SETTINGS["2"] = "Very High";
+PARTICLE_QUALITY_SETTINGS["2"] = "Ultra"; // unsure if it actually goes this far
+
 
 function parseXML() {
 	var inifile = $('textarea#inifile').val();
@@ -71,7 +99,25 @@ function writeSettings(){
 	if(shader_quality in SHADER_QUALITY_SETTINGS){
 		writeLine("Shader quality : " + SHADER_QUALITY_SETTINGS[shader_quality] + "\n");
 	}
-	
+
+	// Shadow quality
+	var shadow_quality = $xml.find("ShadowQuality").attr("value");
+	if(shadow_quality in SHADOW_QUALITY_SETTINGS){
+		writeLine("Shadow quality : " + SHADOW_QUALITY_SETTINGS[shadow_quality] + "\n");
+	}
+
+	// Grass quality
+	var grass_quality = $xml.find("GrassQuality").attr("value");
+	if(grass_quality in GRASS_QUALITY_SETTINGS){
+		writeLine("Grass quality : " + GRASS_QUALITY_SETTINGS[grass_quality] + "\n");
+	}
+
+	// Water quality
+	var water_quality = $xml.find("WaterQuality").attr("value");
+	if(water_quality in WATER_QUALITY_SETTINGS){
+		writeLine("Water quality : " + WATER_QUALITY_SETTINGS[water_quality] + "\n");
+	}	
+
 	// Tesselation
 	var tesselation = $xml.find("Tessellation").attr("value");
 	if(tesselation in TESSELATION_SETTINGS){
