@@ -91,37 +91,37 @@ function writeSettings(){
 	// Texture quality
 	var texture_quality = $xml.find("TextureQuality").attr("value");
 	if(texture_quality in TEXTURE_QUALITY_SETTINGS){
-		writeLine("Texture quality : " + TEXTURE_QUALITY_SETTINGS[texture_quality] + "\n");
+		writeLine("Texture quality: " + TEXTURE_QUALITY_SETTINGS[texture_quality] + "\n");
 	}
 	
 	// Shader quality
 	var shader_quality = $xml.find("ShaderQuality").attr("value");
 	if(shader_quality in SHADER_QUALITY_SETTINGS){
-		writeLine("Shader quality : " + SHADER_QUALITY_SETTINGS[shader_quality] + "\n");
+		writeLine("Shader quality: " + SHADER_QUALITY_SETTINGS[shader_quality] + "\n");
 	}
 
 	// Shadow quality
 	var shadow_quality = $xml.find("ShadowQuality").attr("value");
 	if(shadow_quality in SHADOW_QUALITY_SETTINGS){
-		writeLine("Shadow quality : " + SHADOW_QUALITY_SETTINGS[shadow_quality] + "\n");
+		writeLine("Shadow quality: " + SHADOW_QUALITY_SETTINGS[shadow_quality] + "\n");
 	}
 
 	// Grass quality
 	var grass_quality = $xml.find("GrassQuality").attr("value");
 	if(grass_quality in GRASS_QUALITY_SETTINGS){
-		writeLine("Grass quality : " + GRASS_QUALITY_SETTINGS[grass_quality] + "\n");
+		writeLine("Grass quality: " + GRASS_QUALITY_SETTINGS[grass_quality] + "\n");
 	}
 
 	// Water quality
 	var water_quality = $xml.find("WaterQuality").attr("value");
 	if(water_quality in WATER_QUALITY_SETTINGS){
-		writeLine("Water quality : " + WATER_QUALITY_SETTINGS[water_quality] + "\n");
+		writeLine("Water quality: " + WATER_QUALITY_SETTINGS[water_quality] + "\n");
 	}	
 
 	// Tesselation
 	var tesselation = $xml.find("Tessellation").attr("value");
 	if(tesselation in TESSELATION_SETTINGS){
-		writeLine("Tesselation : " + TESSELATION_SETTINGS[tesselation]);
+		writeLine("Tesselation: " + TESSELATION_SETTINGS[tesselation]);
 	}
 }
 
