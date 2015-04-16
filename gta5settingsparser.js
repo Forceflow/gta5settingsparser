@@ -42,6 +42,11 @@ PARTICLE_QUALITY_SETTINGS["1"] = "High";
 PARTICLE_QUALITY_SETTINGS["2"] = "Very High";
 PARTICLE_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
 
+var REFLECTION_QUALITY_SETTINGS = {};
+REFLECTION_QUALITY_SETTINGS["0"] = "Normal";
+REFLECTION_QUALITY_SETTINGS["1"] = "High";
+REFLECTION_QUALITY_SETTINGS["2"] = "Very High";
+REFLECTION_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
 
 function parseXML() {
 	var inifile = $('textarea#inifile').val();
@@ -118,11 +123,18 @@ function writeSettings(){
 		writeLine("Water quality: " + WATER_QUALITY_SETTINGS[water_quality] + "\n");
 	}
 
-	// Water quality
+	// Particle quality
 	var particle_quality = $xml.find("ParticleQuality").attr("value");
 	if(particle_quality in PARTICLE_QUALITY_SETTINGS){
 		writeLine("Particle quality: " + PARTICLE_QUALITY_SETTINGS[particle_quality] + "\n");
+	}
+
+	// Reflection quality
+	var reflection_quality = $xml.find("ReflectionQuality").attr("value");
+	if(reflection_quality in REFLECTION_QUALITY_SETTINGS){
+		writeLine("Reflection quality: " + REFLECTION_QUALITY_SETTINGS[reflection_quality] + "\n");
 	}	
+	
 
 	// Tesselation
 	var tesselation = $xml.find("Tessellation").attr("value");
