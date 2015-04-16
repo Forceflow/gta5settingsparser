@@ -3,40 +3,11 @@
 <head>
 <title>GTA 5 Settings Parser</title>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="gta5settingsparser.js" type="text/javascript"></script>
 </head>
 <body>
-<script type="text/javascript" >
-var $xml;
-
-var TESSELATION_SETTINGS = {};
-TESSELATION_SETTINGS["0"] = "Off";
-TESSELATION_SETTINGS["1"] = "Normal";
-TESSELATION_SETTINGS["2"] = "High";
-
-function parseXML() {
-	var inifile = $('textarea#inifile').val();
-    var xmlDoc = $.parseXML( inifile );
-	$xml = $( xmlDoc );
-	
-	// screen width and height, refresh rate, windowed mode and vsync
-	var width = $xml.find("ScreenWidth").attr("value");
-	var height = $xml.find("ScreenHeight").attr("value");
-	var refreshrate = $xml.find("RefreshRate").attr("value");
-	var windowed = $xml.find("Windowed").attr("value");
-	if(windowed == 0){windowed = "Fullscreen";}else {windowed = "Windowed";}
-	var vsync = $xml.find("Vsync").attr("value");
-	if(vsync == 0){vsync = "No V-sync";}else {vsync = "V-sync on";}
-	
-	$("#parsed").append("Resolution: " + width + " x " + height + ", " + refreshrate + " hz, " + windowed + ", " + vsync + " \n");
-	
-	
-	var tesselation = $xml.find("Tessellation").attr("value");
-	if(tesselation in TESSELATION_SETTINGS)
-		$("#parsed").append("Tesselation : " + TESSELATION_SETTINGS[tesselation]);
-	}
-</script>
 <p>Work in progress! This is a proof of concept. Check <a href="https://www.reddit.com/r/GTA/comments/32posy/tool_gta_5_settings_to_readable_format/">this reddit thread</a> for progress.</p>
-<button onClick="parseXML()">Convert settings XML to readable text</button>
+<button onClick="parse()">Convert settings XML to readable text</button>
 <br />
 <textarea rows="25" cols="50" id="inifile">(Paste your /Users/Documents/Rockstar Games/GTA V/settings.xml here)</textarea>
 <textarea rows="25" cols="60" id="parsed"></textarea>
