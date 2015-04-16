@@ -22,11 +22,10 @@ function parseXML() {
 }
 
 function writeLine(line){
-	$("#parsed").append(line);
+	$("#parsed").val($("#parsed").val() + line);
 }
 
 function writeSettings(){
-	
 	// Video card description
 	var videocard = $xml.find("VideoCardDescription").text();
 	writeLine(videocard + "\n");
@@ -43,11 +42,11 @@ function writeSettings(){
 	
 	// Anti-aliasing: FXAA, MSAA, TXAA
 	var FXAA = $xml.find("FXAA_Enabled").attr("value");
-	if(FXAA == 0){FXAA = "FXAA off";}else{FXAA = "FXAA on";}
+	if(FXAA == "false" || FXAA == "0" ){FXAA = "FXAA off";}else{FXAA = "FXAA on";}
 	var MSAA = $xml.find("MSAA").attr("value");
 	if(MSAA == 0){MSAA = "MSAA off";}else{MSAA = "MSAA " + MSAA + "x";}
-	var TXAA = $xml.find("TXAA_enabled").attr("value");
-	if(TXAA == 0){TXAA = "TXAA off";}else{TXAA = "TXAA on";}
+	var TXAA = $xml.find("TXAA_Enabled").attr("value");
+	if(TXAA == "false" || TXAA == "0"){TXAA = "TXAA off";}else{TXAA = "TXAA on";}
 	writeLine(FXAA + ", " + MSAA + ", " + TXAA + "\n");
 	
 	// Population and distance scaling/variety
@@ -81,6 +80,7 @@ function writeSettings(){
 }
 
 function parse(){
+	$("#parsed").val('');
 	parseXML();
 	writeSettings();
 }
