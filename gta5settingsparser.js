@@ -1,3 +1,6 @@
+// GTA 5 settings.xml parser by Jeroen Baert
+// https://github.com/Forceflow/gta5settingsparser
+
 var $xml;
 
 // define value -> setting translation
