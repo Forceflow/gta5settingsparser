@@ -221,6 +221,31 @@ function writeSettings(){
 	if(tessellation in TESSELLATION_SETTINGS){
 		writeLine("Tessellation: " + TESSELLATION_SETTINGS[tessellation]);
 	} else {writeLine("UNKNOWN TESSELLATION SETTING");}
+
+	// Advanced graphics options
+	var longshadows = $xml.find("Shadow_LongShadows").attr("value");
+	if(longshadows == "true" || longshadows == 1){
+		writeLine("Long Shadows: On"); 
+	} else {
+		writeLine("Long Shadows: Off");
+	}
+	
+	// High resolution shadows
+	var ultrashadows = $xml.find("UltraShadows_Enabled").attr("value");
+	if(ultrashadows =="true" || ultrashadows == 1){
+		writeLine("High Resolution Shadows: On"); 
+	} else {
+		writeLine("High Resolution Shadows: Off");
+	}
+
+	// High detail streaming while flying
+	var flying_streaming = $xml.find("HdStreamingInFlight").attr("value");
+	if(flying_streaming =="true" || flying_streaming == 1){
+		writeLine("HD Streaming while Flying: On"); 
+	} else {
+		writeLine("HD Streaming while Flying: Off");
+	}
+	
 }
 
 function parse(){
