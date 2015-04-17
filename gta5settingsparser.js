@@ -6,10 +6,11 @@ DX_VERSION_SETTINGS["0"] = "DirectX 10";
 DX_VERSION_SETTINGS["1"] = "DirectX 10.1";
 DX_VERSION_SETTINGS["2"] = "DirectX 11";
 
-var TESSELATION_SETTINGS = {};
-TESSELATION_SETTINGS["0"] = "Off";
-TESSELATION_SETTINGS["1"] = "Normal";
-TESSELATION_SETTINGS["2"] = "High";
+var TESSELLATION_SETTINGS = {};
+TESSELLATION_SETTINGS["0"] = "Off";
+TESSELLATION_SETTINGS["1"] = "Normal";
+TESSELLATION_SETTINGS["2"] = "High";
+TESSELLATION_SETTINGS["3"] = "Very High";
 
 var TEXTURE_QUALITY_SETTINGS = {};
 TEXTURE_QUALITY_SETTINGS["0"] = "Normal";
@@ -20,14 +21,12 @@ var SHADER_QUALITY_SETTINGS = {};
 SHADER_QUALITY_SETTINGS["0"] = "Normal";
 SHADER_QUALITY_SETTINGS["1"] = "High";
 SHADER_QUALITY_SETTINGS["2"] = "Very High";
-SHADER_QUALITY_SETTINGS["3"] = "Ultra";  // unsure if it actually goes this far
 
 var SHADOW_QUALITY_SETTINGS = {};
 SHADOW_QUALITY_SETTINGS["0"] = "Low";
 SHADOW_QUALITY_SETTINGS["1"] = "Normal";
 SHADOW_QUALITY_SETTINGS["2"] = "High";
 SHADOW_QUALITY_SETTINGS["3"] = "Very High";
-SHADOW_QUALITY_SETTINGS["4"] = "Ultra";  // unsure if it actually goes this far
 
 var GRASS_QUALITY_SETTINGS = {};
 GRASS_QUALITY_SETTINGS["0"] = "Normal";
@@ -51,14 +50,31 @@ var REFLECTION_QUALITY_SETTINGS = {};
 REFLECTION_QUALITY_SETTINGS["0"] = "Normal";
 REFLECTION_QUALITY_SETTINGS["1"] = "High";
 REFLECTION_QUALITY_SETTINGS["2"] = "Very High";
-REFLECTION_QUALITY_SETTINGS["3"] = "Ultra"; // unsure if it actually goes this far
+REFLECTION_QUALITY_SETTINGS["3"] = "Ultra"; 
 
 var SHADOW_SHOFTSHADOWS_SETTINGS = {};
-SHADOW_SHOFTSHADOWS_SETTINGS["0"] = "Hard";
+SHADOW_SHOFTSHADOWS_SETTINGS["0"] = "Sharp";
 SHADOW_SHOFTSHADOWS_SETTINGS["1"] = "Soft";
 SHADOW_SHOFTSHADOWS_SETTINGS["2"] = "Softer";
 SHADOW_SHOFTSHADOWS_SETTINGS["3"] = "Softest";
+SHADOW_SHOFTSHADOWS_SETTINGS["4"] = "AMD CHS";
 SHADOW_SHOFTSHADOWS_SETTINGS["4"] = "Nvidia PCSS";
+
+var POSTFX_SETTINGS = {};
+POSTFX_SETTINGS["0"] = "Normal";
+POSTFX_SETTINGS["1"] = "High";
+POSTFX_SETTINGS["2"] = "Very High";
+POSTFX_SETTINGS["3"] = "Ultra";
+
+var AO_SETTINGS = {};
+AO_SETTINGS["0"] = "Off";
+AO_SETTINGS["1"] = "Normal";
+AO_SETTINGS["2"] = "High";
+
+//postfx normal high very high ultra
+//ao off normal high
+//motion blur only when high
+//dof only when very high
 
 function parseXML() {
 	var inifile = $('textarea#inifile').val();
@@ -92,10 +108,14 @@ function writeSettings(){
 	var FXAA = $xml.find("FXAA_Enabled").attr("value");
 	if(FXAA == "false" || FXAA == "0" ){FXAA = "FXAA off";}else{FXAA = "FXAA on";}
 	var MSAA = $xml.find("MSAA").attr("value");
-	if(MSAA == 0){MSAA = "MSAA off";}else{MSAA = "MSAA " + MSAA + "x";}
-	var TXAA = $xml.find("TXAA_Enabled").attr("value");
-	if(TXAA == "false" || TXAA == "0"){TXAA = "TXAA off";}else{TXAA = "TXAA on";}
-	writeLine(FXAA + ", " + MSAA + ", " + TXAA);
+	if(MSAA != 0){ // you can only have TXAA when you have MSAA
+		MSAA = "MSAA " + MSAA + "x";
+		var TXAA = $xml.find("TXAA_Enabled").attr("value");
+		if(TXAA == "false" || TXAA == "0"){TXAA = "TXAA off";}else{TXAA = "TXAA on";}
+		writeLine(FXAA + ", " + MSAA + ", " + TXAA);
+	} else {
+		writeLine(FXAA + ", MSAA off");
+	}
 	
 	// Population and distance scaling/variety
 	var population_density = $xml.find("CityDensity").attr("value");
@@ -163,12 +183,41 @@ function writeSettings(){
 	if(shadow_softshadows in SHADOW_SHOFTSHADOWS_SETTINGS){
 		writeLine("Soft shadows: " + SHADOW_SHOFTSHADOWS_SETTINGS[shadow_softshadows]);
 	} else {writeLine("UNKNOWN SOFT SHADOW QUALITY");}
-
-	// Tesselation
-	var tesselation = $xml.find("Tessellation").attr("value");
-	if(tesselation in TESSELATION_SETTINGS){
-		writeLine("Tesselation: " + TESSELATION_SETTINGS[tesselation]);
-	} else {writeLine("UNKNOWN TESSELATION SETTING");}
+	
+	// Post FX
+	var postfx = $xml.find("PostFX").attr("value");
+	if(postfx in POSTFX_SETTINGS){
+		writeLine("Post FX: " + POSTFX_SETTINGS[postfx]);
+	} else {writeLine("UNKNOWN POST FX SETTING");}
+	
+	// Motion Blur strength
+	var motion_blur_strength = $xml.find("MotionBlurStrength").attr("value");
+	motion_blur_strength = (parseFloat(motion_blur_strength) * 100).toFixed(0);
+	writeLine("Motion Blur: " + motion_blur_strength + "%");
+	
+	// Depth Of Field
+	var dof = $xml.find("DoF").attr("value");
+	if(dof == "false" || dof == "0" ){writeLine("Depth of Field: Off");}else{writeLine("Depth of Field: On");}
+	
+	// Anisotropic Filtering
+	var anisotropic_filtering = $xml.find("AnisotropicFiltering").attr("value");
+	if(anisotropic_filtering == 0){
+		writeLine("Anisotropic Filtering: Off");
+	} else {
+		writeLine("Anisotropic Filtering: " + anisotropic_filtering + "x");
+	}
+	
+	// Ambient Occlusion
+	var ao = $xml.find("SSAO").attr("value");
+	if(ao in AO_SETTINGS){
+		writeLine("Ambient Occlusion: " + AO_SETTINGS[ao]);
+	} else {writeLine("UNKNOWN AMBIENT OCCLUSION SETTING");}
+	
+	// Tessellation
+	var tessellation = $xml.find("Tessellation").attr("value");
+	if(tessellation in TESSELLATION_SETTINGS){
+		writeLine("Tessellation: " + TESSELLATION_SETTINGS[tessellation]);
+	} else {writeLine("UNKNOWN TESSELLATION SETTING");}
 }
 
 function parse(){
