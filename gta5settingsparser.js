@@ -74,14 +74,28 @@ AO_SETTINGS["0"] = "Off";
 AO_SETTINGS["1"] = "Normal";
 AO_SETTINGS["2"] = "High";
 
+var valid_xml = true;
+
 //postfx normal high very high ultra
 //ao off normal high
 //motion blur only when high
 //dof only when very high
 
 function parseXML() {
+	valid_xml = true;
 	var inifile = $('textarea#inifile').val();
-    var xmlDoc = $.parseXML( inifile );
+	if(inifile == ""){
+		valid_xml = false;
+		return;
+	}
+	try {
+		var xmlDoc = $.parseXML( inifile );
+	}
+	catch(err) {
+		valid_xml = false;
+		return;
+	}
+
 	$xml = $( xmlDoc );
 }
 
@@ -251,6 +265,10 @@ function writeSettings(){
 function parse(){
 	$("#parsed").val('');
 	parseXML();
+	if(!valid_xml){
+		writeLine("No XML or invalid XML pasted. Make sure you paste the full contents of your settings.xml file!");
+		return;
+	}
 	writeSettings();
 	writeLine("Generated with Forceflow's GTA 5 settings parser");
 }
