@@ -108,7 +108,7 @@ function parseXML() {
 }
 
 function writeLine(line){
-	$("#parsed").val($("#parsed").val() + line + "\n");
+	$("#parsed").val($("#parsed").val() + line + "  \n");
 }
 
 function writeSettings(){
