@@ -76,10 +76,18 @@ AO_SETTINGS["2"] = "High";
 
 var valid_xml = true;
 
-//postfx normal high very high ultra
-//ao off normal high
-//motion blur only when high
-//dof only when very high
+$( document ).ready(function() {
+    watcharea();
+});
+
+function watcharea(){
+	$('textarea#inifile').on('change',function(){
+		parse();
+	});
+	$('textarea#inifile').keyup(function(){
+		parse();
+	});
+}
 
 function parseXML() {
 	valid_xml = true;
@@ -260,13 +268,23 @@ function writeSettings(){
 		writeLine("HD Streaming while Flying: Off");
 	}
 	
+	// Extended Distance Scaling
+	var extended_distance_scaling = $xml.find("MaxLodScale").attr("value");
+	extended_distance_scaling = (parseFloat(extended_distance_scaling) * 100).toFixed(0);
+	writeLine("Extended Distance Scaling: " + extended_distance_scaling + "%");
+	
+	// Extended shadow distance
+	var extended_shadow_distance = $xml.find("Shadow_Distance").attr("value");
+	extended_shadow_distance = (parseFloat(extended_shadow_distance - 1) * 100).toFixed(0);
+	writeLine("Extended Shadow Distance: " + extended_shadow_distance + "%");
+	
 }
 
 function parse(){
 	$("#parsed").val('');
 	parseXML();
 	if(!valid_xml){
-		writeLine("No XML or invalid XML pasted. Make sure you paste the full contents of your settings.xml file!");
+		writeLine("No XML or invalid XML pasted. Make sure you paste the full contents of your settings.xml file in the area on the left!");
 		return;
 	}
 	writeSettings();
