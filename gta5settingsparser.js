@@ -125,8 +125,8 @@ function writeSettings(){
 	var refreshrate = $xml.find("RefreshRate").attr("value");
 	var windowed = $xml.find("Windowed").attr("value");
 	if(windowed == 0){windowed = "Fullscreen";}else{windowed = "Windowed";}
-	var vsync = $xml.find("Vsync").attr("value");
-	if(vsync == 0){vsync = "No V-sync";}else{vsync = "V-sync on";}
+	var vsync = $xml.find("VSync").attr("value"); // Ensure case matches XML
+	if(vsync == "false" || vsync == "0" ){vsync = "No V-sync";}else{vsync = "V-sync on";}
 	writeLine(width + " x " + height + ", " + refreshrate + " hz, " + windowed + ", " + vsync);
 	
 	// Anti-aliasing: FXAA, MSAA, TXAA
